@@ -21,6 +21,8 @@ export async function isAdmin() {
   if (!userEmail) {
     return false;
   }
+
+  // Fetch the user's information only once
   const userInfo = await UserInfo.findOne({ email: userEmail });
   if (!userInfo) {
     return false;
@@ -28,6 +30,5 @@ export async function isAdmin() {
   return userInfo.admin;
 }
 
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST };
+// Export the NextAuth handler
+export default NextAuth(authOptions);
