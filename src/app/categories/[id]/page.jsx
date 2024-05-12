@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
-const individualCategoryPage = () => {
+const IndividualCategoryPage = () => { // Capitalized the component name
   const { id } = useParams();
   const router = useRouter();
   const { loading: profileLoading, data: profileData } = profile();
@@ -34,7 +34,7 @@ const individualCategoryPage = () => {
         setMenuItems(filteredMenuItems);
       });
     });
-  }, []);
+  }, [id]); // Added id as a dependency
 
   async function handleCategorySubmit(ev) {
     ev.preventDefault();
@@ -158,4 +158,4 @@ const individualCategoryPage = () => {
   );
 };
 
-export default individualCategoryPage;
+export default IndividualCategoryPage;
