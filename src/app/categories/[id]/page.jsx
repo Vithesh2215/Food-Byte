@@ -1,17 +1,16 @@
 "use client";
-import { useEffect , useState } from "react";
+import { useEffect, useState } from "react";
 import { UserTabs } from "@/components/layouts/UserTabs";
-import { useProfile as profile} from "@/components/UseProfile";
+import { useProfile as profile } from "@/components/UseProfile";
 import { useRouter } from "next/router";
 import { Image } from "cloudinary-react";
 import DeleteButton from "@/components/DeleteButton";
 import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
 import Link from "next/link";
 
-const IndividualCategoryPage = () => { // Capitalized the component name
-  const { id } = useParams();
+const IndividualCategoryPage = () => {
   const router = useRouter();
+  const { id } = router.query;
   const { loading: profileLoading, data: profileData } = profile();
   const [editedCategory, setEditedCategory] = useState(null);
   const [category, setCategory] = useState(null);
@@ -20,6 +19,8 @@ const IndividualCategoryPage = () => { // Capitalized the component name
   let imageURL = "";
 
   useEffect(() => {
+    if (!id) return;
+
     fetch("/api/Categories").then((res) => {
       res.json().then((categories) => {
         const category = categories.find((i) => i._id === id);
@@ -34,7 +35,7 @@ const IndividualCategoryPage = () => { // Capitalized the component name
         setMenuItems(filteredMenuItems);
       });
     });
-  }, [id]); // Added id as a dependency
+  }, [id]);
 
   async function handleCategorySubmit(ev) {
     ev.preventDefault();
@@ -61,7 +62,7 @@ const IndividualCategoryPage = () => { // Capitalized the component name
       error: "Error Occurred!..",
     });
 
-    router.refresh();
+    router.reload();
   }
 
   const handleDeleteClick = async (_id) => {
