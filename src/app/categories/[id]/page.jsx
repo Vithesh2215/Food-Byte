@@ -1,17 +1,18 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { UserTabs } from "@/components/layouts/UserTabs";
-import { useProfile as profile } from "@/components/UseProfile";
-import { useRouter } from "next/router";
-import { Image } from "cloudinary-react";
-import DeleteButton from "@/components/DeleteButton";
+import { useProfile } from "@/components/UseProfile";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import { Image } from "cloudinary-react";
+import DeleteButton from "@/components/DeleteButton";
+import { useParams, useRouter } from "next/navigation";
 
 const IndividualCategoryPage = () => {
+  const { id } = useParams();
   const router = useRouter();
-  const { id } = router.query;
-  const { loading: profileLoading, data: profileData } = profile();
+  const { loading: profileLoading, data: profileData } = useProfile();
   const [editedCategory, setEditedCategory] = useState(null);
   const [category, setCategory] = useState(null);
   const [categoryname, setCategoryName] = useState("");
@@ -19,8 +20,6 @@ const IndividualCategoryPage = () => {
   let imageURL = "";
 
   useEffect(() => {
-    if (!id) return;
-
     fetch("/api/Categories").then((res) => {
       res.json().then((categories) => {
         const category = categories.find((i) => i._id === id);
@@ -62,38 +61,25 @@ const IndividualCategoryPage = () => {
       error: "Error Occurred!..",
     });
 
-    router.reload();
+    router.replace(router.asPath);
   }
 
   const handleDeleteClick = async (_id) => {
-    const promise = new Promise(async (resolve, reject) => {
-      const response1 = await fetch("/api/Categories?_id=" + _id, {
+    try {
+      await fetch(`/api/Categories/${_id}`, {
         method: "DELETE",
       });
-      menuItems.forEach(async (menuItem) => {
-        const response2 = await fetch("/api/menuitems?_id=" + menuItem._id, {
+      const promises = menuItems.map(async (menuItem) => {
+        await fetch(`/api/menuitems/${menuItem._id}`, {
           method: "DELETE",
         });
-        if (response2.ok) {
-          resolve();
-        } else {
-          reject();
-        }
       });
-      if (response1.ok) {
-        resolve();
-      } else {
-        reject();
-      }
-    });
-
-    toast.promise(promise, {
-      loading: "Deleting...",
-      success: "Deleted...",
-      error: "Error",
-    });
-
-    router.push("/categories");
+      await Promise.all(promises);
+      toast.success("Deleted...");
+      router.push("/categories");
+    } catch (error) {
+      toast.error("Error");
+    }
   };
 
   if (profileLoading) {
@@ -136,21 +122,21 @@ const IndividualCategoryPage = () => {
       <div className="grid grid-cols-3 gap-2 mt-8">
         {menuItems?.length > 0 &&
           menuItems.map((item) => {
-
             imageURL = item?.imageURL;
-
             return (
               <Link
                 key={item._id}
                 href={"/menuitems/edit/" + item._id}
-                className="bg-gray-200 rounded-lg p-4 flex flex-col justify-center items-center"
+                legacyBehavior
               >
-                <Image
-                  cloudName="duyvi6pzk"
-                  publicId={imageURL}
-                  className="w-20 h-20 rounded-full"
-                />
-                <div className="text-center mt-2">{item.name}</div>
+                <a className="bg-gray-200 rounded-lg p-4 flex flex-col justify-center items-center">
+                  <Image
+                    cloudName="duyvi6pzk"
+                    publicId={imageURL}
+                    className="w-20 h-20 rounded-full"
+                  />
+                  <div className="text-center mt-2">{item.name}</div>
+                </a>
               </Link>
             ) 
           })}
