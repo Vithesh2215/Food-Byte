@@ -73,20 +73,24 @@ function AuthLinks({ status, userName }) {
               <button
                 type="button"
                 onClick={() => signIn("google", { callbackUrl: "/profile" })}
-                className="flex gap-4 justify-center hover:bg-slate-200"
+                className="block w-full text-left hover:bg-slate-200 px-4 py-2"
               >
-                <Image src={"/google.png"} alt={""} width={24} height={24} />
-                Login
+                <div className="flex items-center">
+                  <Image src={"/google.png"} alt={""} width={24} height={24} />
+                  <span className="ml-2">Login</span>
+                </div>
               </button>
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-blue-500 h-[2px]" />
             <DropdownMenuItem>
               <button
                 onClick={() => signIn("google", { callbackUrl: "/profile" })}
-                className="flex gap-4 justify-center hover:bg-slate-200"
+                className="block w-full text-left hover:bg-slate-200 px-4 py-2"
               >
-                <Image src={"/google.png"} alt={""} width={24} height={24} />
-                Register
+                <div className="flex items-center">
+                  <Image src={"/google.png"} alt={""} width={24} height={24} />
+                  <span className="ml-2">Register</span>
+                </div>
               </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -126,7 +130,13 @@ export default function Header() {
     <header className="">
       <div className="flex items-center justify-between">
         <Link className="text-primary font-semibold text-2xl" href={"/"}>
-          <Image src={"/logo.png"} width={200} height={200} alt="logo" priority="true"/>
+          <Image
+            src={"/logo.png"}
+            width={200}
+            height={200}
+            alt="logo"
+            priority="true"
+          />
         </Link>
         <div className="hidden md:flex items-center gap-4">
           <nav className="flex items-center gap-2 text-gray-500 font-semibold">
