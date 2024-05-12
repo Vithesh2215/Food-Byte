@@ -1,14 +1,13 @@
 "use client";
-
 import { useEffect , useState } from "react";
 import { UserTabs } from "@/components/layouts/UserTabs";
 import { useProfile as profile} from "@/components/UseProfile";
-import { redirect, useParams , useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import Link from "next/link";
-// import Image from "next/legacy/image";
+import { useRouter } from "next/router";
 import { Image } from "cloudinary-react";
 import DeleteButton from "@/components/DeleteButton";
+import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 
 const individualCategoryPage = () => {
   const { id } = useParams();
