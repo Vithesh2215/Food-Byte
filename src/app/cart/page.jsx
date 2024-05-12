@@ -8,7 +8,8 @@ import Trash from "@/components/Icons/Trash";
 import AddressInputs from "@/components/layouts/AddressInputs";
 import { useProfile } from "@/components/UseProfile";
 import toast from "react-hot-toast";
-import CartProduct from "@/components/menu/CartProduct";
+import CartProduct from "@/components/Menu/CartProduct";
+// import CartProduct from "@/components/menu/CartProduct";
 
 export default function CartPage() {
   const { cartProducts, removeCartProd } = useContext(CartContext);

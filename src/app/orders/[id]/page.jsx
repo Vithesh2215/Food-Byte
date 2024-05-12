@@ -7,7 +7,7 @@ import {
   CartContext,
   CartProductPrice,
 } from "@/components/AppContext";
-import CartProduct from "@/components/menu/CartProduct";
+import CartProduct from "@/components/Menu/CartProduct";
 
 export default function OrderPage(check) {
   const { clearCart } = useContext(CartContext);
