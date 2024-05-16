@@ -73,24 +73,20 @@ function AuthLinks({ status, userName }) {
               <button
                 type="button"
                 onClick={() => signIn("google", { callbackUrl: "/profile" })}
-                className="block w-full text-left hover:bg-slate-200 px-4 py-2"
+                className="flex gap-4 justify-center hover:bg-slate-200"
               >
-                <div className="flex items-center">
-                  <Image src={"/google.png"} alt={""} width={24} height={24} priority={true}/>
-                  <span className="ml-2">Login</span>
-                </div>
+                <Image src={"/google.png"} alt={""} width={24} height={24} />
+                Login
               </button>
             </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-blue-500 h-[2px]" />
             <DropdownMenuItem>
               <button
                 onClick={() => signIn("google", { callbackUrl: "/profile" })}
-                className="block w-full text-left hover:bg-slate-200 px-4 py-2"
+                className="flex gap-4 justify-center hover:bg-slate-200"
               >
-                <div className="flex items-center">
-                  <Image src={"/google.png"} alt={""} width={24} height={24} priority={true}/>
-                  <span className="ml-2">Register</span>
-                </div>
+                <Image src={"/google.png"} alt={""} width={24} height={24} />
+                Register
               </button>
             </DropdownMenuItem>
           </DropdownMenuContent>
