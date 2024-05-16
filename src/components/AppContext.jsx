@@ -40,7 +40,7 @@ export function AppProvider({ children }) {
       saveCartProdToLocalStorage(newProducts);
       return newProducts;
     });
-    toast.success("Product removed");
+    toast.success("Product removed successfully");
   };
 
   const saveCartProdToLocalStorage = (cartProducts) => {
